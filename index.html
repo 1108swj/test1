@@ -3,67 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo App</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        .container {
-            width: 80%;
-            margin: 20px auto;
-            background: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-        input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #5cb85c;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-    </style>
+    <title>Check Author Key</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('package.json')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.author) {
+                        console.log('Author key exists:', data.author);
+                        document.getElementById('author-status').textContent = 'Author key exists.';
+                    } else {
+                        console.log('Author key does not exist.');
+                        document.getElementById('author-status').textContent = 'Author key does not exist.';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching package.json:', error);
+                    document.getElementById('author-status').textContent = 'Failed to fetch package.json.';
+                });
+        });
+    </script>
 </head>
 <body>
-    <div class="container">
-        <h1>Todo List</h1>
-        <input type="text" id="newTodo" placeholder="Add a new todo">
-        <button onclick="addTodo()">Add</button>
-        <ul id="todoList"></ul>
-    </div>
-
-    <script>
-        function addTodo() {
-            const newTodo = document.getElementById('newTodo').value;
-            if (newTodo.trim() !== '') {
-                const list = document.getElementById('todoList');
-                const item = document.createElement('li');
-                item.textContent = newTodo;
-                list.appendChild(item);
-                document.getElementById('newTodo').value = '';
-            } else {
-                alert('Please enter a valid todo item.');
-            }
-        }
-    </script>
+    <h1>Check if "author" key exists in package.json</h1>
+    <p>Status: <span id="author-status">Loading...</span></p>
 </body>
 </html>
